@@ -1,0 +1,94 @@
+---
+title: "Software installation"
+output:
+  html_document:
+    code_folding: show
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.width = 5, fig.height = 5, fig.align = 'center', eval = F)
+```
+
+In this section, we are going to get our system ready to run `python` and `R` sessions. This guide comprehends both `GNU/Linux` and `Windows` OS instructions. 
+
+## Getting `conda`
+
+There are many different ways to install `R` and `python` in our personal computer, depending on the situation we would use one over the overs. In this course, we are going to rely on the `conda` environment to get everything ready. 
+
+Why not installing `R` and `python` directly from their official websites?  
+
+Because, depending on our operating system, the installation instructions will change. In addition, we want **both** `R` and `python`, and the `conda` environment provides an easy way to get them both installed in just a few minutes.
+
+There is another reason why I prefer `conda`. Our personal computers (desktop, laptop, etc) are usually used by no one but us (as the word personal suggests). However, sometimes we have to run our code in a shared system, for instace a high-performance cluster, and the first problem that we face is that we are not used to that (usually `GNU/Linux`) OS. The second and more challenging problem is that we probably don't have administrator rights to install new software on the system, and furthermore, the often outdated version of the OS prevents us from installing the required system libraries to run our code. 
+
+`Conda` is an open source,cross-platform, package manager and environment management system.  It is released under the Berkeley Software Distribution License by Continuum Analytics. The `conda` package and environment manager is included in all versions of `anaconda`, `miniconda`, and `anaconda repository`.
+
+### Windows instructions
+
+We will install `conda` though `miniconda`, which only includes base packages to get `python` ready. Additional `python` and system libraries will have to be installed later.
+
+`Miniconda` can be dowloaded from the [official website](https://conda.io/miniconda.html). In particular, we will work with the [python2.7 flavour](https://repo.continuum.io/miniconda/Miniconda2-latest-Windows-x86.exe).
+
+<iframe width="640" height="480" src="https://www.youtube.com/embed/OIkXJrIAp4I" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+### GNU/Linux instructions
+
+1. 64bit linux executable can be downloaded [here](https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh). If you don't have a desktop environment nor a functional web browser, you can download the script with `wget`.
+
+```{bash}
+cd && wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+```
+
+2. After the download finishes, run the installer.
+
+```{bash}
+sh Miniconda2-latest-Linux-x86_64.sh 
+```
+
+3. Follow the instructions. When you are asked about adding `Miniconda2` to the `PATH`, answer `yes`.
+
+```{bash}
+Do you wish the installer to prepend the Miniconda2 install location
+to PATH in your /home/user/.bashrc ? [yes|no]
+[no] >>> yes
+```
+
+## Installing `R` with `conda`
+
+Now that we have a working python installation, let's focus on `R`. Fortunately, `R` is available through `conda`. We can check all the available packages in the [anaconda cloud](https://anaconda.org/search?q=R+base).
+
+Open the `anaconda prompt` or just an ordinary terminal in GNU/Linux and type the following.  
+
+```{bash}
+conda install -c conda-forge r-base
+```
+
+That's it!
+
+## RStudio Desktop
+
+[RStudio](https://www.rstudio.com/products/rstudio/) is a powerful IDE for R. It has a fully fuctional [open source version](https://www.rstudio.com/products/rstudio/download/#download), which can be easily installed in GNU/Linux, Windows, and MacOSX.
+
+However, using `RStudio` with the `R` version from `conda` is not trivial. `RStudio` is reccomended to run with the official `R` release from [cran](https://cran.rstudio.com/bin/windows/base/). Additional tunning is required in order to have `RStudio` running conda's `R`.
+
+<iframe width="640" height="480" src="https://www.youtube.com/embed/clooS1XnBi8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Spyder
+
+Spyder is a powerful scientific environment written in Python, for Python, and designed by and for scientists, engineers and data analysts. 
+
+To install `spyder` open the `anaconda prompt` and type the following.
+
+```{bash}
+conda install -c conda-forge spyder
+```
+
+Easy as that!
+
+-------------------------

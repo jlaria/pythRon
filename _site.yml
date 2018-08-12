@@ -1,0 +1,11 @@
+name: "R & python introduction"
+output_dir: "."
+navbar:
+  title: "R & python introduction"
+  left:
+    - text: "Software"
+      href: conda_install.html
+output:
+  html_document:
+        highlight: pygments
+        theme: cosmo
