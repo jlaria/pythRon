@@ -5,7 +5,11 @@ navbar:
   left:
     - text: "Software"
       href: conda_install.html
+    - text: "R basics"
+      href: into_types_R.html
+    - text: "python basics"
+      href: into_types_py.html
 output:
   html_document:
-        highlight: pygments
-        theme: cosmo
+        highlight: kate
+        theme: simplex

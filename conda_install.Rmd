@@ -19,7 +19,7 @@ In this section, we are going to get our system ready to run `python` and `R` se
 
 ## Getting `conda`
 
-There are many different ways to install `R` and `python` in our personal computer, depending on the situation we would use one over the overs. In this course, we are going to rely on the `conda` environment to get everything ready. 
+There are many different ways to install `R` and `python` in our personal computer, depending on the situation we would use one over the others. In this course, we are going to rely on the `conda` environment to get everything ready. 
 
 Why not installing `R` and `python` directly from their official websites?  
 

@@ -1,0 +1,604 @@
+---
+title: "Introduction to R"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.width = 5, fig.height = 5, fig.align = 'center', eval = T, collapse = T)
+```
+
+# The R language
+
+R is an interpreted language, which means that most of its implementations execute instructions directly and freely, without previously compiling a program into machine-language instructions. Thus, users can typically access R through a command-line interpreter, such as conda's command prompt (in Windows) or the terminal (in GNU/Linux). For instance, we can type `2+2`, press <kbd>Enter</kbd> (in a terminal) or <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (in RStudio), the computer replies 4.
+
+```{r, eval=TRUE}
+2 + 2
+```
+
+# Objects
+
+In R, *objects* provide a means of accessing data stored in memory. Objects are referred to through *symbols* (variable names) or *variables*. 
+
+## Vectors
+
+Vectors are the most basic objects in R. They can be thought of as contiguous cells containing data. Single numbers, such as `3.14`, and strings, such as `"pi"`, are still vectors (of length 1). Vectors of length 0 are also possible, and often useful.
+
+R has six basic *atomic* vector types, where atomic means all their elements are of the same type. Those basic types are the following.
+
+### Logical
+
+Takes two possible values: `TRUE` (`T`) or `FALSE` (`F`).
+```{r, eval=T}
+var_logical = TRUE
+typeof(var_logical)
+
+vector_logical = c(TRUE, FALSE, TRUE)
+typeof(vector_logical)
+
+vector_logical[1]
+
+is.logical(vector_logical)
+
+vector_logical[4]
+is.logical(vector_logical[4])
+
+```
+`NA`(not available) is a special type of data (by default logical).
+
+### Integer
+
+```{r, eval=T}
+var_int = 2L
+typeof(var_int)
+
+is.integer(var_int)
+
+length(var_int)
+
+var_int
+var_int[1]
+
+vector_int = c(var_int, 3L, 8L, 13:18)
+typeof(vector_int)
+
+vector_int
+
+length(vector_int)
+
+vector_int[10]
+
+typeof(vector_int[10])
+```
+
+### Double (numeric)
+
+```{r, eval=T}
+var_double = 3.14
+typeof(var_double)
+is.double(var_double)
+is.numeric(var_double)
+
+var_inf = var_double/0; var_inf
+var_nan = 0/0; var_nan
+typeof(c(var_inf, var_nan))
+```
+`Inf` and `NaN` are special types of double.
+
+### Complex
+
+```{r, eval=T}
+a = 5.2
+b = 1.7
+c = complex(real = a, imaginary = b); c
+typeof(c)
+Re(c)
+Im(c)
+Mod(c)
+Arg(c)
+Conj(c)
+sqrt(c)
+```
+### Character
+
+```{r, eval=T}
+var_chr1 = "Hola"
+var_chr2 = "Mundo"
+
+typeof(var_chr1)
+
+c(var_chr1, var_chr2)
+
+paste(var_chr1, var_chr2)
+```
+
+### Raw 
+```{r, eval=T}
+var_raw = as.raw(40); var_raw
+```
+Notice the hexadecimal output.
+```{r, eval=T}
+vect_raw = charToRaw("Hola Mundo"); vect_raw
+
+rawToChar(vect_raw[1:4])
+
+typeof(vect_raw[1:4])
+```
+
+## Lists
+
+Lists are another kind of data storage. Lists have elements, but unlike vectors, those elements do not have to be of the same type. Here are some examples.
+
+```{r, eval=T}
+my.contact = list(
+  name = "Juan C",
+  gitpage = "http://github.com/jlaria",
+  age = 26,
+  tags = c("#data-science", "#r", "#python")
+)
+my.contact
+```
+We can access specific element of the list with `$`
+```{r, eval=T}
+my.contact$tags
+typeof(my.contact$tags)
+```
+
+## Factors
+
+Factors are special compound objects, used to describe cathegorical data.
+
+```{r, eval=TRUE}
+risk = factor(c("hi", "hi", "lo", "med", "lo", "hi")); risk
+
+typeof(risk)
+
+levels(risk)
+
+risk = factor(c("hi", "hi", "lo", "med", "lo", "hi"),
+              levels=c("lo", "med", "hi"),
+              ordered = T); risk
+```
+
+## Matrices
+
+A matrix is a collection of similar object arranged in rows and columns. Matrices are constructed column-wise so entries start in the upper left corner and run down the columns.
+
+```{r}
+X = matrix(1:8, nrow = 2, ncol = 4); X
+
+dim(X)
+
+t(X)
+
+norm(X, "F")
+
+rownames(X) = c("obs 1", "obs 2")
+colnames(X) = paste("var",1:4)
+X
+```
+
+Matrices can also be created by column-binding or row-binding.
+
+```{r}
+x = 1:4
+y = 5:8
+
+cbind(x,y)
+
+rbind(x,y)
+```
+
+Multi-dimensional arrays are also posible.
+
+```{r}
+A = array(1:24, dim = c(2,4,3)); A
+```
+
+
+# Indexing
+
+R contains several constructs which allow access to individual elements or subsets through indexing operations.
+
+There are three basic indexing operators: `[]`, `[[]]` and `$`. 
+
+
+```{r, eval=T}
+vector_int
+
+vector_int[9]
+
+vector_int[c(2,9)]
+
+X[2,1]
+
+X["obs 2", "var 1"]
+
+A[1,2:3,1:2]
+```
+Components of vectors can also be named.
+```{r, eval=T, collapse=T}
+namedvector_int = c(1, 1, 2, 3, 5)
+names(namedvector_int) = c("day 1", "day 2", "day 3", "day 4", "day 5")
+
+namedvector_int["day 1"]
+
+namedvector_int[c("day 5", "day 2")]
+```
+
+The operator `[[]]` is useful with list vectors. It can be used on atomics, tho.
+
+```{r, eval=T}
+my.contact[4] # Returns a list with one element: a character vector
+
+typeof(my.contact[4])
+
+my.contact[[1]] # Returns the character vector 
+
+typeof(my.contact[[1]])
+```
+
+The form `$` applies only to lists objects.
+
+```{r, eval=T}
+my.contact$name
+
+my.contact$"age"
+```
+
+It is also possible to index vectors with `[]` using more complex constructions.
+
+```{r}
+a = c(1, 3, 4, -1, 2)
+b = c(1, 2, 4, 8, 16)
+
+a[b]
+
+b[-4]
+
+a[c(T,F,T)]
+
+b[risk]
+
+b[]
+```
+
+# Operators
+
+R allows the use of arithmetic expressions using operators, which can be grouped using parentheses, mixed with function calls, and assigned to variables in a straightforward manner.
+
+```{r}
+x = 2; a = 1
+y = 2 * (a + log(x)); y
+```
+
+Common vector/matrix opperators are listed here.
+
+  `-`	Minus, can be unary or binary
+```{r}
+x = c(1,-1, 3)
+y = c(2, 4, 6)
+
+x-y
+```
+  
+  
+  `+`	Plus, can be unary or binary
+```{r}
+x+y
+```
+  
+  `!`	Unary not
+```{r}
+b = c(T, F, T)
+
+!b
+```
+  
+  `:`	Sequence, binary (in model formulae: interaction)
+```{r}
+z = 3:8; z
+```
+  
+  `*`	Multiplication, binary
+```{r}
+x*y
+
+2*z
+
+x*z
+```
+
+  `/`	Division, binary
+
+```{r}
+x/y
+```
+
+
+  `^`	Exponentiation, binary
+```{r}
+x^y
+```
+
+  `%%`	Modulus, binary
+```{r}
+7%%5
+```
+
+  `%/%`	Integer divide, binary
+```{r}
+7%/%5
+```
+
+  `%*%`	Matrix product, binary
+```{r}
+x %*% y
+```
+
+  `%o%`	Outer product, binary
+```{r}
+M = x %o% y; M
+
+```
+
+  `%x%`	Kronecker product, binary
+```{r}
+x %x% M
+```
+
+  `%in%`	Matching operator, binary (in model formulae: nesting)
+  
+```{r}
+x %in% z
+```
+
+  `<`	Less than, binary
+
+```{r}
+x < y
+```
+
+
+  `>`	Greater than, binary
+
+```{r}
+y > x
+```
+
+  `==`	Equal to, binary
+
+```{r}
+x == y
+```
+
+  `>=`	Greater than or equal to, binary
+
+  `<=`	Less than or equal to, binary
+
+  `&`	And, binary, vectorized
+  
+```{r}
+c(T, F, T) & c(F, F, T)
+```
+  
+
+  `&&`	And, binary, not vectorized
+```{r}
+c(T, F, T) && c(F, F, T)
+```
+
+  `|`	Or, binary, vectorized
+```{r}
+c(T, F, T) | c(F, F, T)
+```
+
+  `||`	Or, binary, not vectorized
+  
+```{r}
+c(T, F, T) || c(F, F, T)
+```
+
+  `<-`	Left assignment, binary
+```{r}
+a <- 1; a
+```
+
+  `->`	Right assignment, binary
+```{r}
+1 -> a; a
+
+
+```
+
+# Control structures
+
+Computation in R consists of sequentially evaluating **statements**. Statements, such as `a = 1` or `a^2`, can be separated by either `;` or a new line. They can also be grouped together using braces `{` and `}`, forming **blocks**.
+
+## if
+
+The `if/else` statement conditionally evaluates two statements. There is a `condition` which is evaluated and if the value is `TRUE` then the first statement is evaluated; otherwise the second statement will be evaluated.
+
+```{r, eval=F}
+if(condition){
+  statement 1
+}else{
+  statement 2
+}
+```
+
+## Loops
+
+R has three statements that provide explicit looping. They are `for`, `while` and `repeat`. The two built-in constructs, `next` and `break`, provide additional control over the evaluation. R provides other functions for implicit looping such as `tapply`, `apply`, and `lapply`. In addition many operations, especially arithmetic ones, are vectorized so you may not need to use a loop. 
+
+If there is some other way, avoid using loops in R, the former is probably faster.
+
+### for
+
+The syntax of the `for` loop is
+```{r, eval=F}
+for(object in vector){
+  statement
+}
+```
+
+Notice that if `statement` is only one line, braces `{}` are not required. 
+
+### while
+
+The syntax of the `while` loop is
+```{r, eval=F}
+while(condition){
+  statement
+}
+```
+
+### repeat 
+
+The syntax of the `repeat` loop is 
+
+```{r, eval=F}
+repeat{
+  statement
+}
+```
+
+The `repeat` statement causes repeated evaluation of the body until a `break` is specifically requested. This means that you need to be careful when using `repeat` because of the danger of an infinite loop.
+
+## Implicit loops
+
+The `apply` family of fuctions avoids the explicit use of loop constructs. They manipulate slices of data from matrices, arrays, lists and dataframes in a repetitive way. Here are some important members of this family.
+
+### apply
+
+```{r}
+X = matrix(rnorm(4*6), nrow = 4, ncol = 6); X
+
+# We want to compute the mean of each column
+
+col.means = apply(X, 2, mean); col.means
+
+# col.means is a vector and it is equivalent to
+col.means_for = rep(0, 6) # declare it
+for(j in 1:6){
+  col.means_for[j] = mean(X[,j])
+}
+col.means_for
+```
+
+# Data manipulation
+
+## Data frames
+
+Data frames in R can be seen as lists of vectors, all with the same length. They are by far the most useful storage structure for data analysis in R. 
+Data frames group vectors together into a 2D tables, where each vector is a column of the table. As happpens with lists in R, each column of a data frame can contain a different type of data, but since columns are vectors, every cell within a column must be of the same type.
+
+There are many ways to create data frames in R, but we rarely have to type the data in R.
+
+```{r}
+df = data.frame(name = c("Juan", "Pedro", "María"),
+                age = c(26, 33, 22),
+                phone = c("666-849334", "666-837489", "666-029340") )
+df
+```
+
+We can create a data frame from a previously defined 2D data matrix.
+
+```{r}
+X = matrix(1:8, nrow = 2, ncol = 4)
+
+df = data.frame(X)
+df
+```
+
+We can also assign names to columns and rows
+
+```{r}
+colnames(df) = paste0("Col", 1:4)
+rownames(df) = paste0("Obs", 1:2)
+
+df
+```
+
+We can delete and edit columns, rows, and cells.
+
+```{r}
+df = data.frame(matrix(rnorm(40), nrow=5, ncol=8))
+
+df$X1 = NULL # delete column 1
+df
+
+df[,c(3,6)] = NULL # delete columns 3 and 6
+df
+
+df = df[-1, ] # remove row 1
+df
+
+df = df[,-c(4:6)] # remove columns 4,5,6
+df
+
+df[2,] = -10 # edit row 2
+df
+
+df$X5 = 5 # edit column X5
+df
+
+```
+
+Data frames with the same colums can be row-concatenated with `rbind`.
+
+```{r}
+df1 = data.frame(name = c("Pedro", "María"),
+                age = c(33, 22),
+                phone = c("666-837489", "666-029340") )
+df2 = data.frame(name = c("Juan"),
+                age = c(26),
+                phone = c("666-849334") )
+
+rbind(df1, df2)
+```
+
+Data frames with the same rows can be column-concatenated with `cbind`.
+```{r}
+df1 = data.frame(name = c("Juan", "Pedro", "María"),
+                age = c(26, 33, 22))
+df2 = data.frame( phone = c("666-849334", "666-837489", "666-029340") )
+
+cbind(df1, df2)
+```
+
+## Data input
+
+### The working directory
+
+Every R session has a default location on the operating system’s file structure called the working directory.
+
+The fuction `getwd()` tells what the current working directory is.
+
+```{r}
+getwd()
+```
+
+To change the working directory, use the `setwd` function. Be sure to enter the working directory as a character string (enclose it in quotes).
+
+```{r, eval=F}
+setwd("~/juank/Downloads")
+```
+
+### Reading data
+
+The `read.table` function reads a file in table format and automatically creates a data frame from it, with cases corresponding to rows and variables to columns in the file.
+
+```{r}
+df = read.table("data/protein.csv",
+                header = T,
+                sep = ",")
+head(df)
+```
+
