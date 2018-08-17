@@ -602,3 +602,162 @@ df = read.table("data/protein.csv",
 head(df)
 ```
 
+The root path to read and write data is the current working directory, however we can specify the whole path to the data. Some reading functions allow to read from urls, not only local paths.
+
+When reading files from the internet, it is often convenient to use the `nrows` parameter the first time, with a reasonable value, to check if we are getting the format right.
+
+```{r}
+df = read.table("http://hci.stanford.edu/courses/cs448b/data/ipasn/cs448b_ipasn.csv", nrows = 10)
+df
+```
+
+For instance, in this case, the data is a standard comma separated `.csv` file. We can set the parameter `sep=,` or just use the function `read.csv`.
+
+```{r}
+df = read.csv("http://hci.stanford.edu/courses/cs448b/data/ipasn/cs448b_ipasn.csv", nrows = 10)
+df
+```
+
+If you are working in a desktop computer and your file is in a local directory, you can use the function `file.choose` combined with `read.table` or `read.csv`.
+
+```{r, eval=F}
+df = read.csv(file.choose())
+```
+
+### Writing data
+
+To export data from R, we can use the `write.table` and `write.csv` functions. Notice that R will export the data to the current directory if we do not specify a root path.
+
+# Functions
+
+## Scope
+
+Almost every programming language has a set of scoping rules, allowing the same name to be used for different objects. This allows, e.g., a local variable in a function to have the same name as a global object. 
+
+The **global environment** is the root of the user workspace. An assignment operation from the command line will cause the relevant object to belong to the global environment. 
+
+If we start up R and make an assignment, we are adding an entry in the global environment.
+
+```{r}
+a = 1234
+
+ls()  # to list all the object in the (global) environment
+```
+
+Here we can see all the variables that we have defined earlier in this document, including `a`.
+We can think of environments as boxes that store objects, including other boxes.
+
+We can define a new environment with the function `new.env`, and create variables inside that environment with `assign`.
+
+```{r}
+my.env = new.env()
+assign("a", 123, envir = my.env)
+ls(my.env)
+my.env$a
+```
+
+The `$` form allows to create, read, and modify an object inside an environment.
+
+```{r}
+my.env$a = my.env$a*2
+my.env$a
+```
+
+Objects in R can be deleted with the function `rm`. 
+
+```{r}
+rm(my.env) # deletes the environment my.env (including all the objects inside that enviroment)
+```
+
+We can not delete the global environment, but we can delete all the objects defined inside.
+
+```{r}
+rm(list = ls()) # deletes everything in the global environment
+
+ls() # empty
+```
+
+Functions have their own environments. 
+
+## Function syntax
+
+The syntax for writing a function is 
+
+```{r, eval=F}
+f = function(args){
+  body
+}
+```
+
+The first component of the function declaration is the keyword `function` which indicates to R that you want to create a function.
+
+An argument list is a comma separated list of formal arguments. A formal argument can be a symbol, a statement of the form `symbol = expression`, or the special formal argument `...`
+
+Generally functions are assigned to symbols but they don’t need to be. The value returned by the call to function is a function. If this is not given a name it is referred to as an `anonymous` function. Anonymous functions are most frequently used as arguments to other functions such as the `apply` family. 
+
+The return value of the function can be specified with `return`.
+
+```{r}
+add = function(x, y){
+  return(x+y)
+}
+add(2,2)
+```
+
+If the `return` value is not specified, by default the value of the last evaluation will be returned.
+
+```{r}
+add = function(x, y){
+  x+y
+}
+add(2,2)
+```
+
+For example, we can create a function that writes the date followed by the value of some variable.
+```{r}
+wlog = function(x){
+  write(paste0(date(), "\t", x), "")
+}
+
+x = 3.14
+wlog("Hola Mundo")
+wlog(x)
+
+```
+
+Furthermore, we can specify default values.
+
+```{r}
+wlog = function(x, y=5){
+  write(paste0(date(), "\t", x, "\t", y), "")
+}
+
+wlog(1.2)
+wlog(1.2, 2.4)
+```
+
+We can specify with the default value `NULL` that a particular argument is optional.
+
+```{r}
+wlog = function(x, y=NULL){
+  write(paste0(date(), "\t", x, "\t", y), "")
+}
+
+wlog(1.2)
+wlog(1.2, 2.4)
+```
+The argument `...` can be passed to function calls inside our function, meaning an arbitrary number of arguments.
+
+```{r}
+wlog = function(..., printdate=T){
+  write(paste0( 
+      {if(printdate)date() else NULL},
+      ...), "")
+}
+wlog("\tHola mundo")
+wlog(printdate = F, "Hola Mundo!")
+wlog("\t x = ",2, "\t y = ", 5, "\t x + y = ", 2+5, "\t FIN.")
+
+```
+
+

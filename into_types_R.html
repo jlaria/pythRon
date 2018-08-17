@@ -959,7 +959,146 @@ df2 =<span class="st"> </span><span class="kw">data.frame</span>( <span class="d
 ## 4    4.2
 ## 5    4.0
 ## 6    2.4</code></pre></div>
+<p>The root path to read and write data is the current working directory, however we can specify the whole path to the data. Some reading functions allow to read from urls, not only local paths.</p>
+<p>When reading files from the internet, it is often convenient to use the <code>nrows</code> parameter the first time, with a reasonable value, to check if we are getting the format right.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;http://hci.stanford.edu/courses/cs448b/data/ipasn/cs448b_ipasn.csv&quot;</span>, <span class="dt">nrows =</span> <span class="dv">10</span>)
+df
+##                      V1
+## 1    date,l_ipn,r_asn,f
+## 2    2006-07-01,0,701,1
+## 3    2006-07-01,0,714,1
+## 4   2006-07-01,0,1239,1
+## 5   2006-07-01,0,1680,1
+## 6   2006-07-01,0,2514,1
+## 7   2006-07-01,0,3320,1
+## 8  2006-07-01,0,3561,13
+## 9   2006-07-01,0,4134,3
+## 10  2006-07-01,0,5617,2</code></pre></div>
+<p>For instance, in this case, the data is a standard comma separated <code>.csv</code> file. We can set the parameter <code>sep=,</code> or just use the function <code>read.csv</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;http://hci.stanford.edu/courses/cs448b/data/ipasn/cs448b_ipasn.csv&quot;</span>, <span class="dt">nrows =</span> <span class="dv">10</span>)
+df
+##          date l_ipn r_asn  f
+## 1  2006-07-01     0   701  1
+## 2  2006-07-01     0   714  1
+## 3  2006-07-01     0  1239  1
+## 4  2006-07-01     0  1680  1
+## 5  2006-07-01     0  2514  1
+## 6  2006-07-01     0  3320  1
+## 7  2006-07-01     0  3561 13
+## 8  2006-07-01     0  4134  3
+## 9  2006-07-01     0  5617  2
+## 10 2006-07-01     0  6478  1</code></pre></div>
+<p>If you are working in a desktop computer and your file is in a local directory, you can use the function <code>file.choose</code> combined with <code>read.table</code> or <code>read.csv</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">file.choose</span>())</code></pre></div>
 </div>
+<div id="writing-data" class="section level3">
+<h3>Writing data</h3>
+<p>To export data from R, we can use the <code>write.table</code> and <code>write.csv</code> functions. Notice that R will export the data to the current directory if we do not specify a root path.</p>
+</div>
+</div>
+</div>
+<div id="functions" class="section level1">
+<h1>Functions</h1>
+<div id="scope" class="section level2">
+<h2>Scope</h2>
+<p>Almost every programming language has a set of scoping rules, allowing the same name to be used for different objects. This allows, e.g., a local variable in a function to have the same name as a global object.</p>
+<p>The <strong>global environment</strong> is the root of the user workspace. An assignment operation from the command line will cause the relevant object to belong to the global environment.</p>
+<p>If we start up R and make an assignment, we are adding an entry in the global environment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="dv">1234</span>
+
+<span class="kw">ls</span>()  <span class="co"># to list all the object in the (global) environment</span>
+##  [1] &quot;a&quot;               &quot;A&quot;               &quot;b&quot;              
+##  [4] &quot;c&quot;               &quot;col.means&quot;       &quot;col.means_for&quot;  
+##  [7] &quot;df&quot;              &quot;df1&quot;             &quot;df2&quot;            
+## [10] &quot;j&quot;               &quot;M&quot;               &quot;my.contact&quot;     
+## [13] &quot;namedvector_int&quot; &quot;risk&quot;            &quot;var_chr1&quot;       
+## [16] &quot;var_chr2&quot;        &quot;var_double&quot;      &quot;var_inf&quot;        
+## [19] &quot;var_int&quot;         &quot;var_logical&quot;     &quot;var_nan&quot;        
+## [22] &quot;var_raw&quot;         &quot;vect_raw&quot;        &quot;vector_int&quot;     
+## [25] &quot;vector_logical&quot;  &quot;x&quot;               &quot;X&quot;              
+## [28] &quot;y&quot;               &quot;z&quot;</code></pre></div>
+<p>Here we can see all the variables that we have defined earlier in this document, including <code>a</code>. We can think of environments as boxes that store objects, including other boxes.</p>
+<p>We can define a new environment with the function <code>new.env</code>, and create variables inside that environment with <code>assign</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.env =<span class="st"> </span><span class="kw">new.env</span>()
+<span class="kw">assign</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">123</span>, <span class="dt">envir =</span> my.env)
+<span class="kw">ls</span>(my.env)
+## [1] &quot;a&quot;
+my.env<span class="op">$</span>a
+## [1] 123</code></pre></div>
+<p>The <code>$</code> form allows to create, read, and modify an object inside an environment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.env<span class="op">$</span>a =<span class="st"> </span>my.env<span class="op">$</span>a<span class="op">*</span><span class="dv">2</span>
+my.env<span class="op">$</span>a
+## [1] 246</code></pre></div>
+<p>Objects in R can be deleted with the function <code>rm</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(my.env) <span class="co"># deletes the environment my.env (including all the objects inside that enviroment)</span></code></pre></div>
+<p>We can not delete the global environment, but we can delete all the objects defined inside.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>()) <span class="co"># deletes everything in the global environment</span>
+
+<span class="kw">ls</span>() <span class="co"># empty</span>
+## character(0)</code></pre></div>
+<p>Functions have their own environments.</p>
+</div>
+<div id="function-syntax" class="section level2">
+<h2>Function syntax</h2>
+<p>The syntax for writing a function is</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f =<span class="st"> </span><span class="cf">function</span>(args){
+  body
+}</code></pre></div>
+<p>The first component of the function declaration is the keyword <code>function</code> which indicates to R that you want to create a function.</p>
+<p>An argument list is a comma separated list of formal arguments. A formal argument can be a symbol, a statement of the form <code>symbol = expression</code>, or the special formal argument <code>...</code></p>
+<p>Generally functions are assigned to symbols but they don’t need to be. The value returned by the call to function is a function. If this is not given a name it is referred to as an <code>anonymous</code> function. Anonymous functions are most frequently used as arguments to other functions such as the <code>apply</code> family.</p>
+<p>The return value of the function can be specified with <code>return</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add =<span class="st"> </span><span class="cf">function</span>(x, y){
+  <span class="kw">return</span>(x<span class="op">+</span>y)
+}
+<span class="kw">add</span>(<span class="dv">2</span>,<span class="dv">2</span>)
+## [1] 4</code></pre></div>
+<p>If the <code>return</code> value is not specified, by default the value of the last evaluation will be returned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add =<span class="st"> </span><span class="cf">function</span>(x, y){
+  x<span class="op">+</span>y
+}
+<span class="kw">add</span>(<span class="dv">2</span>,<span class="dv">2</span>)
+## [1] 4</code></pre></div>
+<p>For example, we can create a function that writes the date followed by the value of some variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wlog =<span class="st"> </span><span class="cf">function</span>(x){
+  <span class="kw">write</span>(<span class="kw">paste0</span>(<span class="kw">date</span>(), <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, x), <span class="st">&quot;&quot;</span>)
+}
+
+x =<span class="st"> </span><span class="fl">3.14</span>
+<span class="kw">wlog</span>(<span class="st">&quot;Hola Mundo&quot;</span>)
+## Fri Aug 17 12:18:24 2018 Hola Mundo
+<span class="kw">wlog</span>(x)
+## Fri Aug 17 12:18:24 2018 3.14</code></pre></div>
+<p>Furthermore, we can specify default values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wlog =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">y=</span><span class="dv">5</span>){
+  <span class="kw">write</span>(<span class="kw">paste0</span>(<span class="kw">date</span>(), <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, x, <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, y), <span class="st">&quot;&quot;</span>)
+}
+
+<span class="kw">wlog</span>(<span class="fl">1.2</span>)
+## Fri Aug 17 12:18:24 2018 1.2 5
+<span class="kw">wlog</span>(<span class="fl">1.2</span>, <span class="fl">2.4</span>)
+## Fri Aug 17 12:18:24 2018 1.2 2.4</code></pre></div>
+<p>We can specify with the default value <code>NULL</code> that a particular argument is optional.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wlog =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">y=</span><span class="ot">NULL</span>){
+  <span class="kw">write</span>(<span class="kw">paste0</span>(<span class="kw">date</span>(), <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, x, <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, y), <span class="st">&quot;&quot;</span>)
+}
+
+<span class="kw">wlog</span>(<span class="fl">1.2</span>)
+## Fri Aug 17 12:18:24 2018 1.2 
+<span class="kw">wlog</span>(<span class="fl">1.2</span>, <span class="fl">2.4</span>)
+## Fri Aug 17 12:18:24 2018 1.2 2.4</code></pre></div>
+<p>The argument <code>...</code> can be passed to function calls inside our function, meaning an arbitrary number of arguments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wlog =<span class="st"> </span><span class="cf">function</span>(..., <span class="dt">printdate=</span>T){
+  <span class="kw">write</span>(<span class="kw">paste0</span>( 
+      {<span class="cf">if</span>(printdate)<span class="kw">date</span>() <span class="cf">else</span> <span class="ot">NULL</span>},
+      ...), <span class="st">&quot;&quot;</span>)
+}
+<span class="kw">wlog</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">Hola mundo&quot;</span>)
+## Fri Aug 17 12:31:12 2018 Hola mundo
+<span class="kw">wlog</span>(<span class="dt">printdate =</span> F, <span class="st">&quot;Hola Mundo!&quot;</span>)
+## Hola Mundo!
+<span class="kw">wlog</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st"> x = &quot;</span>,<span class="dv">2</span>, <span class="st">&quot;</span><span class="ch">\t</span><span class="st"> y = &quot;</span>, <span class="dv">5</span>, <span class="st">&quot;</span><span class="ch">\t</span><span class="st"> x + y = &quot;</span>, <span class="dv">2</span><span class="op">+</span><span class="dv">5</span>, <span class="st">&quot;</span><span class="ch">\t</span><span class="st"> FIN.&quot;</span>)
+## Fri Aug 17 12:31:12 2018  x = 2   y = 5   x + y = 7   FIN.</code></pre></div>
 </div>
 </div>
 
