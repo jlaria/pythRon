@@ -311,7 +311,13 @@ div.tocify {
   <a href="into_types_R.html">R basics</a>
 </li>
 <li>
+  <a href="R_ex.html">R exercises</a>
+</li>
+<li>
   <a href="into_types_py.html">python basics</a>
+</li>
+<li>
+  <a href="py_ex.html">python excercises</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -345,7 +351,7 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">x <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>      <span class="co"># int</span>
 y <span class="op">=</span> <span class="fl">3.14</span>    <span class="co"># float</span>
 z <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span><span class="ot"> 2j</span>  <span class="co"># complex</span></code></pre></div>
-<p>Te verify the type of a variable, use the function <code>type()</code></p>
+<p>To verify the type of a variable, use the function <code>type()</code></p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> <span class="bu">type</span>(x)
 <span class="co">## &lt;type 'int'&gt;</span>
 <span class="bu">print</span> <span class="bu">type</span>(y)
@@ -401,9 +407,9 @@ z <span class="op">=</span> <span class="bu">int</span>(<span class="op">-</span
 s <span class="op">=</span> a[<span class="dv">0</span>:<span class="dv">5</span>] <span class="op">+</span> <span class="st">&quot; everybody&quot;</span>
 <span class="bu">print</span> s
 <span class="co">## Hello everybody</span>
-s <span class="op">=</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st"> everybody... and look, </span><span class="sc">%d</span><span class="st"> is an integer, </span><span class="sc">%f</span><span class="st"> is a float, and </span><span class="sc">%.2f</span><span class="st"> is a pretier float.&quot;</span><span class="op">%</span> (a[<span class="dv">0</span>:<span class="dv">5</span>], <span class="dv">5</span>, <span class="fl">5.67</span>, <span class="fl">1.6180</span>)
+s <span class="op">=</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st"> everybody... and look, </span><span class="sc">%d</span><span class="st"> is an integer, </span><span class="sc">%f</span><span class="st"> is a float, and </span><span class="sc">%.2f</span><span class="st"> is a prettier float.&quot;</span><span class="op">%</span> (a[<span class="dv">0</span>:<span class="dv">5</span>], <span class="dv">5</span>, <span class="fl">5.67</span>, <span class="fl">1.6180</span>)
 <span class="bu">print</span> s
-<span class="co">## Hello everybody... and look, 5 is an integer, 5.670000 is a float, and 1.62 is a pretier float.</span></code></pre></div>
+<span class="co">## Hello everybody... and look, 5 is an integer, 5.670000 is a float, and 1.62 is a prettier float.</span></code></pre></div>
 <p>There are some useful functions to use with string variables.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">s <span class="op">=</span> <span class="st">&quot;   Hello, World!  &quot;</span>
 <span class="bu">print</span> s
@@ -692,8 +698,7 @@ y <span class="op">=</span> <span class="fl">10.62</span>
 <ol style="list-style-type: decimal">
 <li>From a regular python list or tuple, using the <code>array</code> function.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])
 <span class="bu">print</span> a
 <span class="co">## [2 3 4]</span>
 <span class="bu">print</span> <span class="bu">type</span>(a)
@@ -706,8 +711,7 @@ b <span class="op">=</span> np.array([<span class="fl">1.2</span>, <span class="
 <ol start="2" style="list-style-type: decimal">
 <li>Sequences of sequences to 2D arrays.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-b <span class="op">=</span> np.array([(<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)])
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">b <span class="op">=</span> np.array([(<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)])
 <span class="bu">print</span> b
 <span class="co">## [[ 1.5  2.   3. ]</span>
 <span class="co">##  [ 4.   5.   6. ]]</span>
@@ -716,8 +720,7 @@ b <span class="op">=</span> np.array([(<span class="fl">1.5</span>,<span class="
 <ol start="3" style="list-style-type: decimal">
 <li><strong>Zero</strong>, <strong>one</strong> and <strong>empty</strong> arrays</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-zero_array <span class="op">=</span> np.zeros( (<span class="dv">3</span>,<span class="dv">4</span>) ) <span class="co"># shape</span>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">zero_array <span class="op">=</span> np.zeros( (<span class="dv">3</span>,<span class="dv">4</span>) ) <span class="co"># shape</span>
 <span class="bu">print</span> zero_array
 <span class="co">## [[ 0.  0.  0.  0.]</span>
 <span class="co">##  [ 0.  0.  0.  0.]</span>
@@ -738,16 +741,14 @@ empty_array <span class="op">=</span> np.empty( (<span class="dv">2</span>,<span
 <ol start="4" style="list-style-type: decimal">
 <li>With <code>arange()</code> and <code>linspace()</code></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-<span class="bu">print</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.3</span>) <span class="co"># from, to, step</span>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.3</span>) <span class="co"># from, to, step</span>
 <span class="co">## [ 0.   0.3  0.6  0.9  1.2  1.5  1.8]</span>
 <span class="bu">print</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">9</span>) <span class="co"># from, to, out length</span>
 <span class="co">## [ 0.    0.25  0.5   0.75  1.    1.25  1.5   1.75  2.  ]</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>With <code>.reshape()</code></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-b <span class="op">=</span> np.arange(<span class="dv">24</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">b <span class="op">=</span> np.arange(<span class="dv">24</span>)
 b <span class="op">=</span> b.reshape(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>) <span class="co"># 3D array</span>
 <span class="bu">print</span> b
 <span class="co">## [[[ 0  1  2  3]</span>
@@ -761,8 +762,7 @@ b <span class="op">=</span> b.reshape(<span class="dv">2</span>,<span class="dv"
 <div id="basic-operations" class="section level2">
 <h2>Basic operations</h2>
 <p>Arithmetic operators on arrays apply elementwise. A new array is created and filled with the result.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.array([<span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>])
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.array([<span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>])
 b <span class="op">=</span> np.arange(<span class="dv">4</span>)
 <span class="bu">print</span> b
 <span class="co">## [0 1 2 3]</span>
@@ -774,8 +774,7 @@ c <span class="op">=</span> a <span class="op">-</span> b
 <span class="bu">print</span> a <span class="op">&lt;</span> <span class="dv">35</span>
 <span class="co">## [ True  True False False]</span></code></pre></div>
 <p>The matrix product can be performed using the <code>dot()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl">7.1</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">8.3</span>, <span class="fl">9.1</span>]).reshape(<span class="dv">2</span>,<span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl">7.1</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">8.3</span>, <span class="fl">9.1</span>]).reshape(<span class="dv">2</span>,<span class="dv">3</span>)
 b <span class="op">=</span> np.arange(<span class="dv">9</span>).reshape(<span class="dv">3</span>,<span class="dv">3</span>)
 c <span class="op">=</span> np.arange(<span class="dv">3</span>)
 <span class="bu">print</span> a<span class="op">*</span>c
@@ -787,8 +786,7 @@ c <span class="op">=</span> np.arange(<span class="dv">3</span>)
 <span class="co">## [[  46.5   59.8   73.1]</span>
 <span class="co">##  [  79.5  102.3  125.1]]</span></code></pre></div>
 <p>Many unary operations, such as computing the sum of all the elements in the array, are implemented as methods of the <code>ndarray</code> class.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl">7.1</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">8.3</span>, <span class="fl">9.1</span>]).reshape(<span class="dv">2</span>,<span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl">7.1</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">8.3</span>, <span class="fl">9.1</span>]).reshape(<span class="dv">2</span>,<span class="dv">3</span>)
 <span class="bu">print</span> a.<span class="bu">sum</span>()
 <span class="co">## 36.1</span>
 <span class="bu">print</span> a.<span class="bu">max</span>()
@@ -796,8 +794,7 @@ a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl
 <span class="bu">print</span> a.var()
 <span class="co">## 5.95138888889</span></code></pre></div>
 <p>By default, these operations apply to the array as though it were a list of numbers, regardless of its shape. However, by specifying the <code>axis</code> parameter you can apply an operation along the specified axis of an array.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl">7.1</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">8.3</span>, <span class="fl">9.1</span>]).reshape(<span class="dv">2</span>,<span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl">7.1</span>, <span class="fl">4.2</span>, <span class="fl">5.4</span>, <span class="fl">8.3</span>, <span class="fl">9.1</span>]).reshape(<span class="dv">2</span>,<span class="dv">3</span>)
 <span class="bu">print</span> a
 <span class="co">## [[ 2.   7.1  4.2]</span>
 <span class="co">##  [ 5.4  8.3  9.1]]</span>
@@ -814,8 +811,7 @@ a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="fl
 <ul>
 <li>One-dimensional arrays can be indexed like lists and other python sequences.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.arange(<span class="dv">10</span>)<span class="op">**</span><span class="dv">3</span>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.arange(<span class="dv">10</span>)<span class="op">**</span><span class="dv">3</span>
 <span class="bu">print</span> a
 <span class="co">## [  0   1   8  27  64 125 216 343 512 729]</span>
 <span class="bu">print</span> a[<span class="dv">2</span>:<span class="dv">5</span>] 
@@ -829,131 +825,135 @@ a <span class="op">=</span> np.arange(<span class="dv">10</span>)<span class="op
 <ul>
 <li>Multidimensional arrays can have one index per axis. These indices are given in a tuple separated by commas.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-b <span class="op">=</span> np.random.random((<span class="dv">3</span>,<span class="dv">4</span>))
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">b <span class="op">=</span> np.random.random((<span class="dv">3</span>,<span class="dv">4</span>))
 <span class="bu">print</span> b
-<span class="co">## [[ 0.92139656  0.47313505  0.80797902  0.89794649]</span>
-<span class="co">##  [ 0.77336393  0.76058643  0.0510251   0.11273355]</span>
-<span class="co">##  [ 0.66696333  0.31364897  0.60452619  0.05527401]]</span>
+<span class="co">## [[ 0.03984524  0.70082232  0.22125331  0.5100547 ]</span>
+<span class="co">##  [ 0.79257359  0.2805715   0.82514292  0.35148371]</span>
+<span class="co">##  [ 0.22878589  0.22369813  0.10046323  0.35630325]]</span>
 <span class="bu">print</span> b[<span class="dv">2</span>,<span class="dv">3</span>]
-<span class="co">## 0.0552740081372</span>
+<span class="co">## 0.356303248239</span>
 <span class="bu">print</span> b[:<span class="dv">2</span>, <span class="dv">1</span>]
-<span class="co">## [ 0.47313505  0.76058643]</span>
+<span class="co">## [ 0.70082232  0.2805715 ]</span>
 <span class="bu">print</span> b[:, <span class="dv">0</span>]
-<span class="co">## [ 0.92139656  0.77336393  0.66696333]</span>
+<span class="co">## [ 0.03984524  0.79257359  0.22878589]</span>
 <span class="bu">print</span> b[:,(<span class="dv">0</span>,<span class="dv">2</span>)]
-<span class="co">## [[ 0.92139656  0.80797902]</span>
-<span class="co">##  [ 0.77336393  0.0510251 ]</span>
-<span class="co">##  [ 0.66696333  0.60452619]]</span>
+<span class="co">## [[ 0.03984524  0.22125331]</span>
+<span class="co">##  [ 0.79257359  0.82514292]</span>
+<span class="co">##  [ 0.22878589  0.10046323]]</span>
 <span class="bu">print</span> b[<span class="op">-</span><span class="dv">1</span>] <span class="co"># equiv. b[-1,:] the last row</span>
-<span class="co">## [ 0.66696333  0.31364897  0.60452619  0.05527401]</span></code></pre></div>
+<span class="co">## [ 0.22878589  0.22369813  0.10046323  0.35630325]</span></code></pre></div>
 <p>Iterating over multidimensional arrays is done with respect to the first axis. However, if one wants to perform an operation on each element in the array, one can use the <code>flat</code> attribute which is an iterator over all the elements of the array.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-b <span class="op">=</span> np.random.random((<span class="dv">3</span>,<span class="dv">4</span>))
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">b <span class="op">=</span> np.random.random((<span class="dv">3</span>,<span class="dv">4</span>))
 <span class="cf">for</span> row <span class="kw">in</span> b:
   <span class="bu">print</span> row
-<span class="co">## [ 0.58730994  0.58524192  0.0720726   0.57266713]</span>
-<span class="co">## [ 0.98233565  0.31095082  0.12552296  0.53462644]</span>
-<span class="co">## [ 0.62280123  0.22796283  0.0375145   0.35944255]</span>
+<span class="co">## [ 0.67471829  0.22079517  0.15196027  0.04393044]</span>
+<span class="co">## [ 0.83694212  0.06681187  0.15389136  0.78581095]</span>
+<span class="co">## [ 0.27250191  0.82307183  0.93449525  0.0627996 ]</span>
 <span class="cf">for</span> element <span class="kw">in</span> b.flat:
   <span class="bu">print</span> element
-<span class="co">## 0.587309942804</span>
-<span class="co">## 0.585241924197</span>
-<span class="co">## 0.0720726028577</span>
-<span class="co">## 0.57266713077</span>
-<span class="co">## 0.982335653861</span>
-<span class="co">## 0.310950820963</span>
-<span class="co">## 0.125522961278</span>
-<span class="co">## 0.534626436331</span>
-<span class="co">## 0.622801226126</span>
-<span class="co">## 0.227962834975</span>
-<span class="co">## 0.0375145043163</span>
-<span class="co">## 0.359442553944</span></code></pre></div>
+<span class="co">## 0.674718286072</span>
+<span class="co">## 0.220795170842</span>
+<span class="co">## 0.151960266665</span>
+<span class="co">## 0.0439304428023</span>
+<span class="co">## 0.83694211788</span>
+<span class="co">## 0.0668118731993</span>
+<span class="co">## 0.153891359102</span>
+<span class="co">## 0.785810949111</span>
+<span class="co">## 0.272501905633</span>
+<span class="co">## 0.823071828385</span>
+<span class="co">## 0.934495254117</span>
+<span class="co">## 0.0627996005385</span></code></pre></div>
 </div>
 <div id="shape-manipulation" class="section level2">
 <h2>Shape manipulation</h2>
 <p>The shape of an array can be changed with various commands. Note that the following three commands all return a modified array, but do not change the original array</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">3</span>,<span class="dv">4</span>)), <span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">3</span>,<span class="dv">4</span>)), <span class="dv">2</span>)
 <span class="bu">print</span> a
-<span class="co">## [[ 0.15  0.03  0.91  0.2 ]</span>
-<span class="co">##  [ 0.85  0.13  0.77  0.02]</span>
-<span class="co">##  [ 0.48  0.81  0.19  0.92]]</span>
+<span class="co">## [[ 0.31  0.24  0.53  0.73]</span>
+<span class="co">##  [ 0.8   0.09  0.58  0.05]</span>
+<span class="co">##  [ 0.39  0.69  0.46  0.8 ]]</span>
 <span class="bu">print</span> a.shape
 <span class="co">## (3, 4)</span>
 <span class="bu">print</span> a.T <span class="co"># transpose matrix</span>
-<span class="co">## [[ 0.15  0.85  0.48]</span>
-<span class="co">##  [ 0.03  0.13  0.81]</span>
-<span class="co">##  [ 0.91  0.77  0.19]</span>
-<span class="co">##  [ 0.2   0.02  0.92]]</span>
+<span class="co">## [[ 0.31  0.8   0.39]</span>
+<span class="co">##  [ 0.24  0.09  0.69]</span>
+<span class="co">##  [ 0.53  0.58  0.46]</span>
+<span class="co">##  [ 0.73  0.05  0.8 ]]</span>
 <span class="bu">print</span> a.reshape(<span class="dv">6</span>,<span class="dv">2</span>)
-<span class="co">## [[ 0.15  0.03]</span>
-<span class="co">##  [ 0.91  0.2 ]</span>
-<span class="co">##  [ 0.85  0.13]</span>
-<span class="co">##  [ 0.77  0.02]</span>
-<span class="co">##  [ 0.48  0.81]</span>
-<span class="co">##  [ 0.19  0.92]]</span>
+<span class="co">## [[ 0.31  0.24]</span>
+<span class="co">##  [ 0.53  0.73]</span>
+<span class="co">##  [ 0.8   0.09]</span>
+<span class="co">##  [ 0.58  0.05]</span>
+<span class="co">##  [ 0.39  0.69]</span>
+<span class="co">##  [ 0.46  0.8 ]]</span>
 <span class="bu">print</span> a.ravel() <span class="co"># returns the array, flattened</span>
-<span class="co">## [ 0.15  0.03  0.91  0.2   0.85  0.13  0.77  0.02  0.48  0.81  0.19  0.92]</span>
+<span class="co">## [ 0.31  0.24  0.53  0.73  0.8   0.09  0.58  0.05  0.39  0.69  0.46  0.8 ]</span>
 <span class="bu">print</span> a.reshape(<span class="dv">4</span>, <span class="op">-</span><span class="dv">1</span>) <span class="co"># dim 2 is automatically calculated.</span>
-<span class="co">## [[ 0.15  0.03  0.91]</span>
-<span class="co">##  [ 0.2   0.85  0.13]</span>
-<span class="co">##  [ 0.77  0.02  0.48]</span>
-<span class="co">##  [ 0.81  0.19  0.92]]</span></code></pre></div>
+<span class="co">## [[ 0.31  0.24  0.53]</span>
+<span class="co">##  [ 0.73  0.8   0.09]</span>
+<span class="co">##  [ 0.58  0.05  0.39]</span>
+<span class="co">##  [ 0.69  0.46  0.8 ]]</span></code></pre></div>
 <p>On the other hand, the <code>ndarray.resize</code> method modifies the array itself.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">3</span>,<span class="dv">4</span>)), <span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">3</span>,<span class="dv">4</span>)), <span class="dv">2</span>)
 <span class="bu">print</span> a
-<span class="co">## [[ 0.82  0.67  0.37  0.46]</span>
-<span class="co">##  [ 0.56  0.36  0.88  0.46]</span>
-<span class="co">##  [ 0.18  0.05  0.77  0.62]]</span>
+<span class="co">## [[ 0.6   0.06  0.44  0.69]</span>
+<span class="co">##  [ 0.82  0.65  0.64  0.09]</span>
+<span class="co">##  [ 0.23  0.76  0.22  0.77]]</span>
 a.resize((<span class="dv">2</span>,<span class="dv">6</span>))
 <span class="bu">print</span> a
-<span class="co">## [[ 0.82  0.67  0.37  0.46  0.56  0.36]</span>
-<span class="co">##  [ 0.88  0.46  0.18  0.05  0.77  0.62]]</span></code></pre></div>
+<span class="co">## [[ 0.6   0.06  0.44  0.69  0.82  0.65]</span>
+<span class="co">##  [ 0.64  0.09  0.23  0.76  0.22  0.77]]</span></code></pre></div>
 <p>Several arrays can be stacked together along different axes.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">2</span>,<span class="dv">2</span>)), <span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">2</span>,<span class="dv">2</span>)), <span class="dv">2</span>)
 b <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">2</span>,<span class="dv">2</span>)), <span class="dv">2</span>)
 <span class="bu">print</span> a
-<span class="co">## [[ 0.15  0.63]</span>
-<span class="co">##  [ 0.33  0.42]]</span>
+<span class="co">## [[ 0.25  0.56]</span>
+<span class="co">##  [ 0.98  0.99]]</span>
 <span class="bu">print</span> b
-<span class="co">## [[ 0.03  0.24]</span>
-<span class="co">##  [ 0.25  0.12]]</span>
+<span class="co">## [[ 0.9   0.17]</span>
+<span class="co">##  [ 0.5   0.87]]</span>
 <span class="bu">print</span> np.vstack((a,b))
-<span class="co">## [[ 0.15  0.63]</span>
-<span class="co">##  [ 0.33  0.42]</span>
-<span class="co">##  [ 0.03  0.24]</span>
-<span class="co">##  [ 0.25  0.12]]</span>
+<span class="co">## [[ 0.25  0.56]</span>
+<span class="co">##  [ 0.98  0.99]</span>
+<span class="co">##  [ 0.9   0.17]</span>
+<span class="co">##  [ 0.5   0.87]]</span>
 <span class="bu">print</span> np.hstack((a,b))
-<span class="co">## [[ 0.15  0.63  0.03  0.24]</span>
-<span class="co">##  [ 0.33  0.42  0.25  0.12]]</span>
+<span class="co">## [[ 0.25  0.56  0.9   0.17]</span>
+<span class="co">##  [ 0.98  0.99  0.5   0.87]]</span>
 <span class="bu">print</span> np.concatenate((a,b), axis<span class="op">=</span><span class="dv">0</span>)
-<span class="co">## [[ 0.15  0.63]</span>
-<span class="co">##  [ 0.33  0.42]</span>
-<span class="co">##  [ 0.03  0.24]</span>
-<span class="co">##  [ 0.25  0.12]]</span>
+<span class="co">## [[ 0.25  0.56]</span>
+<span class="co">##  [ 0.98  0.99]</span>
+<span class="co">##  [ 0.9   0.17]</span>
+<span class="co">##  [ 0.5   0.87]]</span>
 <span class="bu">print</span> np.concatenate((a,b), axis<span class="op">=</span><span class="dv">1</span>)
-<span class="co">## [[ 0.15  0.63  0.03  0.24]</span>
-<span class="co">##  [ 0.33  0.42  0.25  0.12]]</span></code></pre></div>
+<span class="co">## [[ 0.25  0.56  0.9   0.17]</span>
+<span class="co">##  [ 0.98  0.99  0.5   0.87]]</span></code></pre></div>
 <p>Conversely, we can split an array along some axis, with <code>hsplit</code>, <code>vsplit</code> and <code>array_split</code>.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">2</span>,<span class="dv">12</span>)), <span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> np.<span class="bu">round</span>(np.random.random((<span class="dv">2</span>,<span class="dv">12</span>)), <span class="dv">2</span>)
 <span class="bu">print</span> a
-<span class="co">## [[ 0.82  0.52  0.41  0.63  0.74  0.42  0.38  0.82  0.44  0.73  0.94  0.88]</span>
-<span class="co">##  [ 0.19  0.77  0.24  0.52  0.39  0.22  0.28  0.57  0.1   0.89  0.33  0.38]]</span>
+<span class="co">## [[ 0.65  0.08  0.45  0.79  0.39  0.16  0.84  0.46  0.22  0.56  0.12  0.66]</span>
+<span class="co">##  [ 0.78  0.79  0.89  0.16  0.68  0.69  0.88  0.75  0.52  0.77  0.97  0.97]]</span>
 <span class="bu">print</span> np.hsplit(a, <span class="dv">3</span>) <span class="co"># split into 3 </span>
-<span class="co">## [array([[ 0.82,  0.52,  0.41,  0.63],</span>
-<span class="co">##        [ 0.19,  0.77,  0.24,  0.52]]), array([[ 0.74,  0.42,  0.38,  0.82],</span>
-<span class="co">##        [ 0.39,  0.22,  0.28,  0.57]]), array([[ 0.44,  0.73,  0.94,  0.88],</span>
-<span class="co">##        [ 0.1 ,  0.89,  0.33,  0.38]])]</span>
+<span class="co">## [array([[ 0.65,  0.08,  0.45,  0.79],</span>
+<span class="co">##        [ 0.78,  0.79,  0.89,  0.16]]), array([[ 0.39,  0.16,  0.84,  0.46],</span>
+<span class="co">##        [ 0.68,  0.69,  0.88,  0.75]]), array([[ 0.22,  0.56,  0.12,  0.66],</span>
+<span class="co">##        [ 0.52,  0.77,  0.97,  0.97]])]</span>
 <span class="bu">print</span> np.hsplit(a, (<span class="dv">3</span>,<span class="dv">8</span>)) <span class="co"># split ater 3rd and 8th column</span>
-<span class="co">## [array([[ 0.82,  0.52,  0.41],</span>
-<span class="co">##        [ 0.19,  0.77,  0.24]]), array([[ 0.63,  0.74,  0.42,  0.38,  0.82],</span>
-<span class="co">##        [ 0.52,  0.39,  0.22,  0.28,  0.57]]), array([[ 0.44,  0.73,  0.94,  0.88],</span>
-<span class="co">##        [ 0.1 ,  0.89,  0.33,  0.38]])]</span></code></pre></div>
+<span class="co">## [array([[ 0.65,  0.08,  0.45],</span>
+<span class="co">##        [ 0.78,  0.79,  0.89]]), array([[ 0.79,  0.39,  0.16,  0.84,  0.46],</span>
+<span class="co">##        [ 0.16,  0.68,  0.69,  0.88,  0.75]]), array([[ 0.22,  0.56,  0.12,  0.66],</span>
+<span class="co">##        [ 0.52,  0.77,  0.97,  0.97]])]</span></code></pre></div>
 </div>
+</div>
+<div id="functions" class="section level1">
+<h1>Functions</h1>
+<p>In simple terms, a function is a device that groups a set of statements so they can be run more than once in a program. Python functions are straightforward to use.</p>
+<p>To define a function in Python, we use the <code>def</code> statement.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> times(x, y):
+  <span class="cf">return</span> x<span class="op">*</span>y</code></pre></div>
+<p>When Python finds this <code>def</code> statement, it creates a new function object that packages the function’s code and assigns the object to the name <code>times</code>. The <code>def</code> statement makes a function, without calling it. After <code>def</code> has run, we can call the function in our program.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> times(<span class="dv">2</span>,<span class="dv">3</span>)
+<span class="co">## 6</span></code></pre></div>
 </div>
 
 

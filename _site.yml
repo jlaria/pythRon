@@ -6,9 +6,13 @@ navbar:
     - text: "Software"
       href: conda_install.html
     - text: "R basics"
-      href: into_types_R.html
+      href: into_types_R.html    
+    - text: "R exercises"
+      href: R_ex.html
     - text: "python basics"
       href: into_types_py.html
+    - text: "python excercises"
+      href: py_ex.html
 output:
   html_document:
         highlight: kate

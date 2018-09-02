@@ -760,4 +760,152 @@ wlog("\t x = ",2, "\t y = ", 5, "\t x + y = ", 2+5, "\t FIN.")
 
 ```
 
+# Visualization with `ggplot2`
 
+`ggplot2` is a flexible and powerful R package for producing graphics, with a deep underlying grammar based on the **g**rammar and **g**raphics concept.
+
+## Installation
+
+To use `ggplot2`, we must first install it. There are several ways to do it.
+
+**Option A**  <a href="https://conda.anaconda.org/conda-forge"> <img src="https://anaconda.org/conda-forge/r-base/badges/installer/conda.svg" /> </a> Open Anaconda prompt and type,
+
+```{bash, eval=F}
+conda install -c conda-forge r-ggplot2
+```
+
+**Option B** Open R and run the following code
+
+```{r, eval=F}
+install.packages("ggplot2")
+```
+
+## Data
+
+To access fuctions and data in an R package, `ggplot2` in this case, we can load it with the `library` function. We are also installing `ISLR` R package, which includes the dataset that we are going to use in the examples.
+
+```{r}
+if(!require("ISLR"))install.packages("ISLR")
+
+library(ggplot2)
+library(ISLR)
+```
+
+In particular, we will load the `Auto` dataset. It includes information about gas mileage, horsepower, acceleration and other indicators of popular car models between 1970 and 1982. We first examine the data with the fuction `head`.
+
+```{r, eval=FALSE}
+data("Auto")
+head(Auto)
+```
+```{r, echo=FALSE}
+data("Auto")
+knitr::kable(head(Auto))
+```
+
+## Components of a `ggplot2`
+
+There are three key components in every `ggplot2`
+
+1. **Data**
+2. **Aesthetic mapping** -- Relates variables in the data with visual properties.
+3. **Layers** -- Describe how to render each observation. There has to be at leat one layer.
+
+For example,
+
+```{r}
+ggplot(data = Auto, 
+       mapping = aes(x = weight, y = mpg))+ # Notice the +
+geom_point()
+
+```
+
+This scatterplot is defined by the following components.
+
+1. Data: `Auto` 
+2. Aesthetic mapping: Vehicle weight is mapped to `x`, and fuel economy to `y` position 
+3. Layer: `geom_point()` -- scatterplot
+
+The structure of this function call is the following.
+
++ Data and aesthetic mappings are supplied in the function `ggplot2`
++ Layers are added on with `+`
+
+## Aesthetics
+
+To add extra variables to a plot, we can use other aesthetics such as color, shape, and size. They work in the same way as the `x` and `y` aesthetics, and are added  into the call to `aes()`.
+
+```{r}
+Auto$cylinders = factor(Auto$cylinders)
+
+ggplot(data = Auto, 
+       mapping = aes(x = weight, y = mpg, color = cylinders))+
+geom_point()
+```
+
+```{r}
+Auto$origin = factor(Auto$origin)
+ggplot(data = Auto, 
+       mapping = aes(x = weight, y = mpg, color = origin, shape = origin))+
+geom_point()
+```
+
+```{r}
+ggplot(data = Auto, 
+       mapping = aes(x = weight, y = mpg, size = horsepower))+
+geom_point()
+```
+
+## Plot Geoms
+
+### Smoother
+
+```{r}
+ggplot(data = Auto, 
+       mapping = aes(x = weight, y = mpg))+
+  geom_point()+
+  geom_smooth()
+```
+
+### Boxplots
+
+```{r}
+ggplot(data = Auto, 
+       mapping = aes(x = origin, y = mpg))+
+  geom_boxplot()
+```
+
+### Histograms
+
+```{r}
+ggplot(data = Auto,
+       mapping = aes(x = mpg))+
+  geom_histogram()
+```
+
+```{r}
+ggplot(data = Auto,
+       mapping = aes(x = mpg))+
+  geom_histogram()+
+  stat_bin(bins = 10) 
+```
+
+
+<!-- # Going parallel -->
+
+<!-- In this section, we are going to study how to execute parallel code in R. -->
+
+<!-- <!-- In machine learning, a hyper-parameter is a parameter whose value is set before the learning process begins. --> 
+<!-- <!-- Hyper-parameter optimization has attracted the attention of many researchers in these last years. Most of advanced model training algorithms nowadays require different hyper-parameters. --> 
+
+<!-- <!-- The sparse-group lasso is a regularization method for regression and variable selection.  --> 
+
+<!-- ## The foreach loop -->
+
+<!-- We are going to work with the `Auto` data frame from the `ISLR` package. -->
+
+<!-- ```{r} -->
+<!-- library(ISLR) -->
+<!-- data("Auto") -->
+<!-- ``` -->
+
+<!-- Suppose  -->

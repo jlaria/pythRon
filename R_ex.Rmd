@@ -1,0 +1,279 @@
+---
+title: "R exercises"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.width = 5, fig.height = 5, fig.align = 'center', eval = F, collapse = T, echo = F)
+```
+
+# Numbers
+
+### Exercise 1.1
+Calculate the inverse tangent (a.k.a. arctan) of the reciprocal of all integers from 1 to 1000. Hint: take a look at the `?Trig` help page to find the inverse tangent function. You don’t need a function to calculate reciprocals.
+
+```{r}
+?Trig
+atan(1/3)
+atan2(1,3)
+
+atan2(1, 1:1000)
+```
+
+### Exercise 1.2
+Assign the numbers 1 to 1000 to a variable `x` . Calculate the inverse tangent of the reciprocal of `x`, as in 1.1, and assign it to a variable `y`. Now reverse the operations by calculating the reciprocal of the tangent of `y` and assigning this value to a variable z.
+
+```{r}
+x = as.numeric(1:1000)
+y = atan2(1, x)
+z = 1/tan(y)
+```
+
+### Exercise 1.3
+Compare the variables `x` and `z` from Exercise 1.2 using `==` , `identical` , and `all.equal`. For `all.equal`, try changing the tolerance level by passing a third argument to the function. What happens if the tolerance is set to `0`?
+```{r}
+x == z
+identical(x,z)
+all.equal(x,z)
+all.equal(x,z,0)
+```
+
+### Exercise 1.4
+Define the following vectors:
+
+1. `true_and_missing`, with the values `TRUE` and `NA` (at least one of each, in any order)
+2. `false_and_missing`, with the values `FALSE` and `NA`
+3. `mixed`, with the values `TRUE`, `FALSE`, and `NA`
+
+Apply the functions `any` and `all` to each of your vectors.
+
+```{r}
+true_and_missing = c(T, NA, T)
+false_and_missing = c(F, NA, F)
+mixed = c(T, NA, F)
+
+any(true_and_missing)
+all(true_and_missing)
+
+any(false_and_missing)
+all(false_and_missing)
+
+any(mixed)
+all(mixed)
+```
+
+# Variables
+
+### Exercise 2.1
+Find the class, type, mode, and storage mode of the following values: `Inf`, `NA`, `NaN`, `""`.
+
+Hint: `?class`, `?typeof`, `?mode`, `?storage.mode`.
+
+```{r}
+infinity = Inf
+class(infinity)
+typeof(infinity)
+mode(infinity)
+storage.mode(infinity)
+```
+### Exercise 2.2
+Randomly generate 1000 pets, from the choices “dog,” “cat,” “hamster,” and “gold‐fish,” with equal probability of each being chosen. Display the first few values of the resultant variable, and count the number of each type of pet.
+
+Hint: `?summary`, `?factor`, `?head`
+```{r}
+pets = c("dog", "cat", "hamster", "gold-fish")
+my.pets = sample(pets, 1000, replace = T)
+head(my.pets)
+summary(factor(my.pets))
+```
+
+### Exercise 2.3
+Create some variables named after vegetables. List the names of all the variables in the user workspace that contain the letter “a”.
+
+Hint: `?ls`
+```{r}
+brocoli = 0
+zanahoria = 1
+remolacha = 2
+lechuga = 3
+col = 4
+repollo = 5
+aguacate = 6
+aji = 7
+tomate = 8
+
+ls(pattern = "a")
+```
+
+# Vectors, Matrices and Arrays
+
+### Exercise 3.1
+The $n$-th triangular number is given by $n*(n+1)/2$. Create a sequence of the first 20 triangular numbers. R has a built-in constant, `letters`, that contains the lowercase letters of the Roman alphabet. Name the elements of the vector that you just created with the first 20 letters of the alphabet. Select the triangular numbers where the name is a vowel.
+
+Hint: `names`, `%in%`.
+```{r}
+triang_num = (1:20)*(1:20+1)/2
+names(triang_num) = letters[1:20]
+triang_num[names(triang_num)%in%c("a", "e", "i", "o", "u")]
+```
+
+### Exercise 3.2 
+The `diag` function has several uses, one of which is to take a vector as its input and create a square matrix with that vector on the diagonal. Create a 21-by-21 matrix with the sequence 10 to 0 to 10 (i.e., 10, 9, ... , 1, 0, 1, ..., 10).
+```{r}
+M1 = diag(c(10:0, 1:10))
+```
+
+### Exercise 3.3
+By passing two extra arguments to `diag`, you can specify the dimensions of the output. Create a 20-by-21 matrix with ones on the main diagonal. Now add a row of zeros above this to create a 21-by-21 square matrix, where the ones are offset a row below the main diagonal.
+
+Create another matrix with the ones offset one up from the diagonal.
+
+Add these two matrices together, then add the answer from Exercise `3.2`. The resultant matrix is called a Wilkinson matrix.
+
+The `eigen` function calculates eigenvalues and eigenvectors of a matrix. Calculate the eigenvalues for your Wilkinson matrix. What do you notice about them?
+
+```{r}
+M_down = diag(1, 20, 21) 
+M_down = rbind(rep(0, 21), M_down)
+M_up = t(M_down)
+M = M1 + M_up + M_down
+
+eigen(M)$values
+plot(eigen(M)$values)
+```
+
+Hint: `?rbind`, `?t`.
+
+# Lists and Data Frames
+
+### Exercise 4.1
+R ships with several built-in datasets, including the famous iris
+data collected by Anderson and analyzed by Fisher in the 1930s. Type `iris` to see the dataset. Create a new data frame that consists of the numeric columns of the iris dataset, and calculate the means of its columns.
+
+Hint: `apply`.
+
+```{r}
+iris
+df = iris[,-5]
+apply(df, 2, mean)
+```
+
+### Exercise 4.2
+The `beaver1` and `beaver2` datasets contain body temperatures of two beavers. Add a column named id to the `beaver1` dataset, where the value is always 1. Similarly, add an id column to `beaver2`, with value 2. Vertically concatenate the two data frames and find the subset where either beaver is active.
+
+Hint: `?subset`, `?rbind`.
+
+```{r}
+beaver_df = rbind(data.frame(beaver1, id = 1),
+                  data.frame(beaver2, id = 2))
+beaver_df[beaver_df$activ==1, ]
+subset(beaver_df, activ==1)
+```
+
+# Functions
+
+### Exercise 5.1
+Create a new environment named `multiples_of_pi`. Assign these variables into the environment:
+
+1. `two_pi`, with the value `2 * pi`, using double square brackets
+2. `three_pi`, with the value `3 * pi`, using the dollar sign operator
+3. `four_pi`, with the value `4 * pi`, using the `assign` function
+
+List the contents of the environment, along with their values.
+
+Hint: `?new.env`, `?ls.str`
+
+```{r}
+multiples_of_pi = new.env()
+multiples_of_pi[["two_pi"]] = 2*pi
+multiples_of_pi$three_pi = 3*pi
+assign("four_pi", 4*pi, envir = multiples_of_pi)
+ls.str(multiples_of_pi)
+```
+
+### Exercise 5.2
+
+Write a function that accepts a vector of integers (for simplicity, you don’t have to worry about input checking) and returns a logical vector that is `TRUE` whenever the input is even, `FALSE` whenever the input is odd, and `NA` whenever the input is nonfinite (nonfinite means anything that will make `is.finite` return `FALSE`: `Inf`, `-Inf`,
+`NA`, and `NaN`). Check that the function works with positive, negative, zero, and nonfinite inputs. 
+
+Hint: `%%`, `sapply`.
+
+```{r}
+is.even = function(x){
+  if(!is.finite(x)){
+    return(NA)
+  }else if(x%%2==0){
+    return(T)
+  }else{
+    return(F)
+  }
+}
+
+my.func = function(vect){
+  x  = sapply(vect, is.even)
+  return(x)
+}
+
+vect = c(1,2,3, -2, -1, 0, Inf, -Inf, NaN, NA)
+my.func(vect)
+```
+
+# Strings and Factors
+
+### Exercise 6.1
+Display the value of pi to 16 significant digits. 
+
+Hint: `?format`, `?sprintf`.
+```{r}
+format(pi, digits = 16)
+sprintf("%.15f", pi)
+```
+### Exercise 6.2
+Split these strings into words, removing any commas or hyphens:
+```{r, echo=T, eval=F}
+x = c(
+  "Swan swam over the pond, Swim swan swim!",
+  "Swan swam back again - Well swum swan!"
+)
+```
+Hint: `?strsplit`, `?base::regex`, and `?gsub`.
+```{r}
+x1 = gsub("[[:punct:]]", " ", x)
+strsplit(x1, " +")
+```
+
+# Loops
+
+### Exercise 7.1
+This is the text for the famous “sea shells” tongue twister:
+```{r, echo=T}
+sea_shells = c(
+"She", "sells", "sea", "shells", "by", "the", "seashore",
+"The", "shells", "she", "sells", "are", "surely", "seashells",
+"So", "if", "she", "sells", "shells", "on", "the", "seashore",
+"I'm", "sure", "she", "sells", "seashore", "shells"
+)
+```
+
+Use the `nchar` function to calculate the number of letters in each word. Now loop over possible word lengths, displaying a message about which words have that length. For example, at length six, you should state that the words “shells” and “surely” have six letters.
+
+Hint: `?sprintf`, `?paste0`, `?write`.
+
+```{r}
+l = nchar(sea_shells)
+
+for (len in sort(unique(l))){
+  str = sprintf("The word(s) %s have %i letters",
+                paste0(sea_shells[which(l==len)], collapse = ", "), 
+                len )
+  write(str, "")
+}
+```
+

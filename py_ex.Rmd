@@ -1,0 +1,200 @@
+---
+title: "Python exercises"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.width = 5, fig.height = 5, fig.align = 'center', eval = F, collapse = T, echo = F)
+```
+
+# Data types and operators
+
+### Exercise 1.1
+The expression `2 ** 3 ** 2` evaluates to which of the following values?
+
+a. 64
+b. 512
+c. 8
+
+```{python}
+print 2 ** 3 ** 2
+```
+
+
+### Exercise 1.2
+The expression `round(23.67)` evaluates to which of the following values?
+
+a. 23
+b. 23.7
+c. 24.0
+
+```{python}
+print round(23.67)
+```
+
+### Exercise 1.3
+Write an import statement that imports just the functions `sqrt` and `log`
+from the `math` module.
+
+```{python}
+from math import sqrt, log
+
+print sqrt(2.4)
+print log(2.4)
+```
+
+### Problem 1.1
+Create a python script to calculate the volume of a cylinder and its lateral area, given its height and base's radius. Show the answer with two decimal
+places.
+```{python}
+import math
+radius = input("Introduce Radius: ")
+height = input("Introduce Height: ")
+volume = (math.pi*radius**2)*height
+lateral_area=2*math.pi*radius*height
+print "\nVolume: %.2f cubic units \nLateral area: %.2f square units" %(volume, lateral_area)
+```
+
+### Problem 1.2
+An employee’s total weekly pay equals the hourly wage multiplied by the
+total number of regular hours plus any overtime pay. Overtime pay equals
+the total overtime hours multiplied by `1.5` times the hourly wage. Write a
+program that takes as inputs the `hourly wage`, `total regular hours`, and
+`total overtime hours` and displays an employee’s `total weekly pay`.
+```{python}
+hour_wage = input("Hourly wage: ")
+total_hours = input("Total regular hours: ")
+overtime_hours = input("Total overtime hours: ")
+
+total_pay = hour_wage * (total_hours + 1.5*overtime_hours)
+print "Total weekly pay is %.2f euros"%(total_pay)
+```
+
+# Control statements
+
+### Exercise 2.1
+How many times does a loop with the header `for count in range(10):` execute the statements in its body?
+
+a. 9 times
+b. 10 times
+c. 11 times
+
+### Exercise 2.2
+What is the output of the loop 
+```{python, echo=T}
+for count in range(5): 
+  print(count)
+```
+
+a. `1 2 3 4 5`
+b. `1 2 3 4`
+c. `0 1 2 3 4`
+
+### Exercise 2.3
+Consider the following code segment:
+```{python, echo = T}
+x = 5
+y = 4
+if x>y:
+  print(y)
+else:
+  print(x)
+```
+What value does this code segment print?
+
+a. 4
+b. 5
+
+### Exercise 2.4
+Consider the following code segment:
+```{python}
+count = 5
+while count > 1:
+  print count
+  count -= 1
+```
+What is the output produced by this code?
+
+a. `1 2 3 4 5`
+b. `2 3 4 5`
+c. `5 4 3 2 1`
+d. `5 4 3 2`
+
+### Problem 2.1
+Write a program that accepts the lengths of three sides of a triangle as
+inputs. The program output should indicate whether the triangle is scalene, isosceles or equilateral.
+
+```{python}
+side1 = float(input("Please introduce the dimension of side 1: "))
+side2 = float(input("Please introduce the dimension of side 2: "))
+side3 = float(input("Please introduce the dimension of side 3: "))
+if side1!=side2 and side1!=side3 and side2!=side3:
+    print "The triangle is scalene"
+elif side1==side2 and side1==side3:
+    print "The triangle is equilateral"
+else:
+    print "The triangle is isosceles"
+```
+
+### Problem 2.2
+
+Create a python script that reads a sample of numbers typed by the user (one by one), until the sample standard deviation exceeds `1/10` times the mean. Finish with a message and show both sample measures.
+
+```{python}
+import numpy as np
+mean = 0.0
+std_dev = 0.0
+num_list = np.array([])
+while std_dev <= 0.1*mean:
+    num_list = np.append(num_list,float(input("Type a number: ")))
+    mean = num_list.mean()
+    if len(num_list) > 1:
+        std_dev=num_list.std(ddof=1) #ddof to get the sample standard deviation
+print "The standard deviation has exceeded 1/10 the mean of the sample\nMean: %.2f\nStandard Dev: %.2f" %(mean,std_dev)
+```
+
+### Problem 2.3
+A standard science experiment is to drop a ball and see how high it
+bounces. Once the “bounciness” of the ball has been determined, the
+ratio gives a bounciness index. For example, if a ball dropped from a
+height of `10` feet bounces `6` feet high, the index is `0.6`, and the total distance traveled by the ball is 16 feet after one bounce. If the ball were to continue bouncing, the distance after two bounces would be `10 ft + 6 ft + 6 ft + 3.6 ft = 25.6 ft`. Note that the distance traveled for each successive bounce is the distance to the floor plus 0.6 of that distance as the ball comes back up. Write a program that lets the user enter the initial height
+of the ball and the number of times the ball is allowed to continue
+bouncing. Output should be the total distance traveled by the ball.
+
+```{python}
+h = input("Initial height (meters): ")
+N = input("How many bounces: ")
+p = 0.6
+
+distance = (h + h*p)*(1-p**N)/(1-p)
+print "Your balls will travel %.2f meters" % (distance)
+```
+
+### Problem 2.4
+Teachers in most school districts are paid on a schedule that provides a
+salary based on their number of years of teaching experience. For exam-
+ple, a beginning teacher in the Lexington School District might be paid
+$30,000 the first year. For each year of experience after this first year, up to 10 years, the teacher receives a 2% increase over the preceding value.
+Write a program that displays a salary schedule, in tabular format, for
+teachers in a school district. The inputs are the starting salary, the per-
+centage increase, and the number of years in the schedule. Each row in
+the schedule should contain the year number and the salary for that year.
+
+```{python}
+salary0 = float(input("Starting salary: "))
+perc_inc = float(input("Percentage increase: "))
+N = input("Number of years: ")
+
+print "Year\tSalary"
+for year in range(N):
+    print "%i\t%.2f"%(year, salary0)
+    salary0 *= 1+perc_inc/100
+```
+
