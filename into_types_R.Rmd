@@ -890,22 +890,134 @@ ggplot(data = Auto,
 ```
 
 
-<!-- # Going parallel -->
+# Going parallel
 
-<!-- In this section, we are going to study how to execute parallel code in R. -->
+In this section, we are going to study how to execute parallel code in R.
 
-<!-- <!-- In machine learning, a hyper-parameter is a parameter whose value is set before the learning process begins. --> 
-<!-- <!-- Hyper-parameter optimization has attracted the attention of many researchers in these last years. Most of advanced model training algorithms nowadays require different hyper-parameters. --> 
+Let's start with a simple example. The following code evaluates candidates for the Mandelbrot set.
 
-<!-- <!-- The sparse-group lasso is a regularization method for regression and variable selection.  --> 
+```{r}
+x = seq(-2, 1, length.out = 500)
+y = seq(-1.5, 1.5, length.out = 500)
 
-<!-- ## The foreach loop -->
+grid = expand.grid( x=x, y=y)
+c = complex(real = grid$x, 
+            imaginary = grid$y)
 
-<!-- We are going to work with the `Auto` data frame from the `ISLR` package. -->
+N = 50
+divergence = rep(0, length(c))
+z = divergence
+index = rep(T,  length(c))
+for(n in 1:N){
+  z[index] = z[index]^2 + c[index]
+  index = Mod(z) < 2
+  divergence[index] = n
+}
 
-<!-- ```{r} -->
-<!-- library(ISLR) -->
-<!-- data("Auto") -->
-<!-- ``` -->
+Z = matrix(divergence, nrow = 500, ncol = 500)
+image( x, y, Z, col =gray((0:N)/N))
 
-<!-- Suppose  -->
+```
+
+
+## The `foreach` loop
+
+The `foreach` loop is the analogous of the `for` loop, when working in parallel. It is distributed in the `foreach` package.
+
+```{r}
+library(foreach)
+```
+
+
+For example, the following `for` and `foreach` loops are equivalent.
+
+```{r}
+# For loop
+s = rep(0, 10)
+for (i in 1:10) {
+  s[i] = sqrt(i)
+}
+s
+
+# Foreach loop
+s = foreach(i = 1:10, .combine = 'c')%do%{
+  sqrt(i)
+}
+s
+```
+
+Notice the syntax of the `foreach` function. Its first argument is the iterator variable, and it returns a vector (because we used the `.combine = 'c'` parameter; by default it returns a list). The operator `%do%` is telling the `foreach` function to run sequentially. Alternatively, we can use  `%dopar%` to run in parallel, if we specified a parallel backend previously.
+
+We can adapt the Mandelbrot script to use a `foreach` outer loop.
+
+```{r}
+library(tictoc)
+library(foreach)
+
+tic()
+x = seq(-2, 1, length.out = 500)
+y = seq(-1.5, 1.5, length.out = 500)
+
+grid = expand.grid( x=x, y=y)
+c_set = split(complex(real = grid$x, 
+            imaginary = grid$y), rep(1:4, each = 500*500/4))
+
+
+N = 100
+divergence.ag = foreach( i=1:4, .combine = "c")%do%{
+  c = c_set[[i]]
+  divergence = rep(0, length(c))
+  z = divergence
+  index = rep(T,  length(c))
+  for(n in 1:N){
+    z[index] = z[index]^2 + c[index]
+    index = Mod(z) < 2
+    divergence[index] = n
+  }
+  divergence
+}
+
+toc()
+
+Z = matrix(divergence.ag, nrow = 500, ncol = 500)
+image( x, y, Z, col =gray((0:N)/N))
+```
+
+## Backends
+
+```{r}
+library(foreach)
+library(doParallel)
+
+cl = makeCluster(3)
+registerDoParallel(cl)
+
+tic()
+
+x = seq(-2, 1, length.out = 500)
+y = seq(-1.5, 1.5, length.out = 500)
+
+grid = expand.grid( x=x, y=y)
+c_set = split(complex(real = grid$x, 
+            imaginary = grid$y), rep(1:4, each = 500*500/4))
+
+
+N = 100
+divergence.ag = foreach( i=1:4, .combine = "c")%dopar%{
+  c = c_set[[i]]
+  divergence = rep(0, length(c))
+  z = divergence
+  index = rep(T,  length(c))
+  for(n in 1:N){
+    z[index] = z[index]^2 + c[index]
+    index = Mod(z) < 2
+    divergence[index] = n
+  }
+  divergence
+}
+toc()
+
+Z = matrix(divergence.ag, nrow = 500, ncol = 500)
+image( x, y, Z, col =gray((0:N)/N))
+
+```

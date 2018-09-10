@@ -20,7 +20,7 @@ Python is an easy to learn, powerful programming language. It has efficient high
 
 # First steps
 
-We are going to start with basic python instructions. We can either open `spyder` or work from python's interactive prompt. To open the interactive prompt, open the anaconda prompt and type `python`.
+We are going to start with basic python instructions. We can either open `spyder` or work from python's interactive prompt. To open the interactive prompt, open the anaconda prompt and type `python`. [script here](./script1.py)
 
 ```{python}
 x = 2 + 2
